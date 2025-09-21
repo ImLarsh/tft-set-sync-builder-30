@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import { cn } from '@/lib/utils';
-import { PlacedChampion, BoardPosition } from '@/types/tft';
+import { PlacedChampion, BoardPosition, TFTTrait } from '@/types/tft';
 import ChampionCard from './ChampionCard';
 
 interface HexGridProps {
   champions: PlacedChampion[];
+  traits: TFTTrait[];
   onRemoveChampion: (id: string) => void;
   onChampionClick: (champion: PlacedChampion) => void;
   onItemEquip: (championId: string, item: any) => void;
@@ -15,7 +16,7 @@ interface HexGridProps {
 const GRID_ROWS = 4;
 const GRID_COLS = 7;
 
-export default function HexGrid({ champions, onRemoveChampion, onChampionClick, onItemEquip, onItemRemove }: HexGridProps) {
+export default function HexGrid({ champions, traits, onRemoveChampion, onChampionClick, onItemEquip, onItemRemove }: HexGridProps) {
   const renderHex = (row: number, col: number) => {
     const position: BoardPosition = { x: col, y: row };
     const placedChampion = champions.find(
@@ -58,6 +59,8 @@ export default function HexGrid({ champions, onRemoveChampion, onChampionClick, 
               onClick={() => onChampionClick(placedChampion)}
               onRemove={() => onRemoveChampion(placedChampion.id)}
               onItemRemove={(itemIndex) => onItemRemove(placedChampion.id, itemIndex)}
+              allTraits={traits}
+              allPlacedChampions={champions}
             />
           </div>
         )}

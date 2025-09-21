@@ -14,7 +14,12 @@ export default function TraitTracker({ traits, placedChampions }: TraitTrackerPr
   // Calculate trait activations
   const traitActivations: TraitActivation[] = traits.map(trait => {
     const currentCount = placedChampions.filter(pc => 
-      pc.champion.traits.includes(trait.name) || pc.champion.traits.includes(trait.id)
+      pc.champion.traits.some(championTrait => 
+        championTrait.toLowerCase().includes(trait.name.toLowerCase()) ||
+        trait.name.toLowerCase().includes(championTrait.toLowerCase()) ||
+        championTrait === trait.name ||
+        championTrait === trait.id
+      )
     ).length;
 
     let activeLevel = 0;

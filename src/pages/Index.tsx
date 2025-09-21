@@ -120,11 +120,8 @@ export default function Index() {
       const item = activeData.item as TFTItem;
       const targetChampion = overData.champion as TFTChampion;
       
-      console.log('Item drop - Item:', item.name, 'Target Champion:', targetChampion.name);
-      
       // Find the placed champion by matching the base champion id
       const placedChampion = placedChampions.find(pc => pc.champion.id === targetChampion.id);
-      console.log('Found placed champion:', placedChampion);
       
       if (placedChampion) {
         handleItemEquip(placedChampion.id, item);
@@ -141,12 +138,28 @@ export default function Index() {
   };
 
   const handleItemEquip = (championId: string, item: TFTItem) => {
-    console.log('handleItemEquip called with:', championId, item.name);
-    console.log('Current placed champions:', placedChampions.map(pc => ({ id: pc.id, name: pc.champion.name, items: pc.items.length })));
+    const targetChampion = placedChampions.find(pc => pc.id === championId);
+    
+    if (!targetChampion) {
+      toast({
+        title: "Error",
+        description: "Champion not found on the board.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (targetChampion.items.length >= 3) {
+      toast({
+        title: "Item Slots Full",
+        description: "This champion already has 3 items equipped. Remove an item first.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     setPlacedChampions(prev => prev.map(pc => {
-      if (pc.id === championId && pc.items.length < 3) {
-        console.log('Equipping item to:', pc.champion.name);
+      if (pc.id === championId) {
         return { ...pc, items: [...pc.items, item] };
       }
       return pc;
@@ -154,7 +167,7 @@ export default function Index() {
     
     toast({
       title: "Item Equipped!",
-      description: `${item.name} has been equipped.`,
+      description: `${item.name} has been equipped to ${targetChampion.champion.name}.`,
     });
   };
 
@@ -206,10 +219,11 @@ export default function Index() {
   };
 
   const handleChampionClick = (placedChampion: PlacedChampion) => {
-    // Future: Open champion details/items modal
+    // Show detailed tooltip information
     toast({
-      title: "Champion Details",
-      description: `${placedChampion.champion.name} - ${placedChampion.champion.traits.join(', ')}`,
+      title: `${placedChampion.champion.name} Details`,
+      description: `Cost: ${placedChampion.champion.cost} | Traits: ${placedChampion.champion.traits.join(', ')} | Items: ${placedChampion.items.length}/3`,
+      duration: 3000,
     });
   };
 
@@ -302,6 +316,7 @@ export default function Index() {
             <div className="col-span-12 lg:col-span-6">
               <HexGrid
                 champions={placedChampions}
+                traits={traits}
                 onRemoveChampion={handleRemoveChampion}
                 onChampionClick={handleChampionClick}
                 onItemEquip={handleItemEquip}

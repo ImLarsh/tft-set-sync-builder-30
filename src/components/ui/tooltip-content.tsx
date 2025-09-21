@@ -4,9 +4,10 @@ import { Star, Zap, Shield, Sword } from 'lucide-react';
 
 interface ChampionTooltipProps {
   champion: TFTChampion;
+  items?: TFTItem[];
 }
 
-export function ChampionTooltip({ champion }: ChampionTooltipProps) {
+export function ChampionTooltip({ champion, items = [] }: ChampionTooltipProps) {
   return (
     <div className="max-w-sm p-4 bg-card border border-border rounded-lg shadow-xl">
       <div className="flex items-center gap-3 mb-3">
@@ -36,6 +37,20 @@ export function ChampionTooltip({ champion }: ChampionTooltipProps) {
             ))}
           </div>
         </div>
+        
+        {items.length > 0 && (
+          <div>
+            <p className="text-sm font-medium text-primary mb-1">Equipped Items ({items.length}/3)</p>
+            <div className="flex flex-wrap gap-1">
+              {items.map((item, index) => (
+                <div key={index} className="flex items-center gap-1 px-2 py-1 bg-accent/20 text-accent-foreground text-xs rounded">
+                  <img src={item.image} alt={item.name} className="w-3 h-3" />
+                  <span>{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         
         <div>
           <p className="text-sm font-medium text-primary mb-1">Ability: {champion.ability.name}</p>
