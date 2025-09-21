@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* TFT Board Builder Design System - Dark Gaming Theme */
+
+@layer base {
+  :root {
+    /* Core TFT Dark Theme */
+    --background: 219 25% 8%;
+    --foreground: 45 100% 95%;
+
+    --card: 219 25% 12%;
+    --card-foreground: 45 100% 95%;
+
+    --popover: 219 25% 10%;
+    --popover-foreground: 45 100% 95%;
+
+    /* TFT Gold Primary */
+    --primary: 45 100% 65%;
+    --primary-foreground: 219 25% 8%;
+
+    /* TFT Blue Secondary */
+    --secondary: 220 90% 25%;
+    --secondary-foreground: 45 100% 95%;
+
+    --muted: 219 25% 15%;
+    --muted-foreground: 45 20% 65%;
+
+    /* TFT Magic Blue Accent */
+    --accent: 220 90% 50%;
+    --accent-foreground: 45 100% 95%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 45 100% 95%;
+
+    --border: 219 25% 20%;
+    --input: 219 25% 15%;
+    --ring: 45 100% 65%;
+
+    /* TFT Rarity Colors */
+    --rarity-common: 120 10% 50%;
+    --rarity-uncommon: 120 60% 45%;
+    --rarity-rare: 220 80% 60%;
+    --rarity-epic: 280 80% 65%;
+    --rarity-legendary: 45 100% 65%;
+
+    /* TFT Trait Colors */
+    --trait-bronze: 30 50% 50%;
+    --trait-silver: 0 0% 70%;
+    --trait-gold: 45 100% 65%;
+    --trait-prismatic: 300 80% 70%;
+
+    /* Hex Grid */
+    --hex-border: 219 25% 25%;
+    --hex-hover: 220 90% 35%;
+    --hex-occupied: 219 25% 18%;
+
+    /* Gradients */
+    --gradient-board: linear-gradient(135deg, hsl(var(--background)), hsl(219 25% 6%));
+    --gradient-champion: linear-gradient(135deg, hsl(var(--card)), hsl(219 25% 15%));
+    --gradient-trait-active: linear-gradient(135deg, hsl(var(--primary)), hsl(45 100% 55%));
+    --gradient-magical: linear-gradient(135deg, hsl(var(--accent)), hsl(220 90% 40%));
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Same as root - TFT is always dark themed */
+    --background: 219 25% 8%;
+    --foreground: 45 100% 95%;
+    --card: 219 25% 12%;
+    --card-foreground: 45 100% 95%;
+    --popover: 219 25% 10%;
+    --popover-foreground: 45 100% 95%;
+    --primary: 45 100% 65%;
+    --primary-foreground: 219 25% 8%;
+    --secondary: 220 90% 25%;
+    --secondary-foreground: 45 100% 95%;
+    --muted: 219 25% 15%;
+    --muted-foreground: 45 20% 65%;
+    --accent: 220 90% 50%;
+    --accent-foreground: 45 100% 95%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 45 100% 95%;
+    --border: 219 25% 20%;
+    --input: 219 25% 15%;
+    --ring: 45 100% 65%;
+    --sidebar-background: 219 25% 10%;
+    --sidebar-foreground: 45 100% 95%;
+    --sidebar-primary: 45 100% 65%;
+    --sidebar-primary-foreground: 219 25% 8%;
+    --sidebar-accent: 219 25% 15%;
+    --sidebar-accent-foreground: 45 100% 95%;
+    --sidebar-border: 219 25% 20%;
+    --sidebar-ring: 45 100% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    background: var(--gradient-board);
+    min-height: 100vh;
+  }
+
+  /* TFT Hexagon Utilities */
+  .hex-shape {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+
+  .hex-border {
+    position: relative;
+  }
+
+  .hex-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: var(--gradient-magical);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: -1;
+  }
+
+  /* Rarity Glow Effects */
+  .rarity-common { box-shadow: 0 0 20px hsl(var(--rarity-common) / 0.3); }
+  .rarity-uncommon { box-shadow: 0 0 20px hsl(var(--rarity-uncommon) / 0.4); }
+  .rarity-rare { box-shadow: 0 0 20px hsl(var(--rarity-rare) / 0.5); }
+  .rarity-epic { box-shadow: 0 0 20px hsl(var(--rarity-epic) / 0.6); }
+  .rarity-legendary { box-shadow: 0 0 25px hsl(var(--rarity-legendary) / 0.8); }
+
+  /* Trait Activation Styles */
+  .trait-active {
+    background: var(--gradient-trait-active);
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+  }
+
+  /* Drag and Drop Styles */
+  .dragging {
+    opacity: 0.5;
+    transform: rotate(2deg) scale(1.05);
+    transition: all 0.2s ease;
+  }
+
+  .drop-zone-active {
+    background: hsl(var(--hex-hover) / 0.3);
+    border: 2px dashed hsl(var(--primary));
+  }
+}
