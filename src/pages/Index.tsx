@@ -120,8 +120,12 @@ export default function Index() {
       const item = activeData.item as TFTItem;
       const targetChampion = overData.champion as TFTChampion;
       
+      console.log('Item drop - Item:', item.name, 'Target Champion:', targetChampion.name);
+      
       // Find the placed champion by matching the base champion id
       const placedChampion = placedChampions.find(pc => pc.champion.id === targetChampion.id);
+      console.log('Found placed champion:', placedChampion);
+      
       if (placedChampion) {
         handleItemEquip(placedChampion.id, item);
       }
@@ -137,8 +141,12 @@ export default function Index() {
   };
 
   const handleItemEquip = (championId: string, item: TFTItem) => {
+    console.log('handleItemEquip called with:', championId, item.name);
+    console.log('Current placed champions:', placedChampions.map(pc => ({ id: pc.id, name: pc.champion.name, items: pc.items.length })));
+    
     setPlacedChampions(prev => prev.map(pc => {
-      if (pc.champion.id === championId && pc.items.length < 3) {
+      if (pc.id === championId && pc.items.length < 3) {
+        console.log('Equipping item to:', pc.champion.name);
         return { ...pc, items: [...pc.items, item] };
       }
       return pc;
