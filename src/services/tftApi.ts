@@ -163,58 +163,14 @@ class TFTApiService {
     }
   }
 
-  // Mock data for development/fallback
+  // Mock data for development/fallback - Set 15 champions
   private getMockChampions(): TFTChampion[] {
     return [
       {
-        id: 'annie',
-        name: 'Annie',
-        cost: 1,
-        traits: ['Invoker', 'Sugarcraft'],
-        stats: {
-          damage: 45,
-          health: 500,
-          armor: 20,
-          magicResist: 20,
-          attackSpeed: 0.6,
-          range: 4,
-        },
-        ability: {
-          name: 'Burst Fire',
-          description: 'Annie hurls a fireball that deals magic damage.',
-          manaCost: 40,
-          damage: [180, 270, 405],
-        },
-        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-champion/TFT12_Annie.TFT_Set12.png',
-        tier: 1,
-      },
-      {
-        id: 'blitzcrank',
-        name: 'Blitzcrank',
-        cost: 2,
-        traits: ['Honeymancy', 'Vanguard'],
-        stats: {
-          damage: 55,
-          health: 750,
-          armor: 40,
-          magicResist: 40,
-          attackSpeed: 0.55,
-          range: 1,
-        },
-        ability: {
-          name: 'Power Fist',
-          description: 'Blitzcrank charges up his fist to deal damage and knock up enemies.',
-          manaCost: 50,
-          damage: [200, 300, 450],
-        },
-        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-champion/TFT12_Blitzcrank.TFT_Set12.png',
-        tier: 1,
-      },
-      {
-        id: 'jinx',
-        name: 'Jinx',
-        cost: 3,
-        traits: ['Sugarcraft', 'Hunter'],
+        id: 'ahri',
+        name: 'Ahri',
+        cost: 4,
+        traits: ['Star Guardian', 'Sorcerer'],
         stats: {
           damage: 65,
           health: 650,
@@ -224,13 +180,79 @@ class TFTApiService {
           range: 4,
         },
         ability: {
-          name: 'Super Mega Death Rocket!',
-          description: 'Jinx fires a rocket that deals damage in a line.',
+          name: 'Pure Heart Breaker',
+          description: 'Deal magic damage to the current target, increased based on missing health. If target dies, deal overkill damage to nearby enemies.',
+          manaCost: 0,
+          damage: [390, 585, 935],
+        },
+        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-champion/TFT15_Ahri.TFT_Set15.png',
+        tier: 4,
+      },
+      {
+        id: 'jinx',
+        name: 'Jinx',
+        cost: 5,
+        traits: ['Star Guardian', 'Sniper'],
+        stats: {
+          damage: 85,
+          health: 750,
+          armor: 30,
+          magicResist: 30,
+          attackSpeed: 0.8,
+          range: 5,
+        },
+        ability: {
+          name: 'Star Rocket Blast Off!',
+          description: 'Passive: Attacks grant stacking Attack Speed. Active: Deal physical damage to target and splash damage.',
+          manaCost: 0,
+          damage: [280, 420, 1260],
+        },
+        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-champion/TFT15_Jinx.TFT_Set15.png',
+        tier: 5,
+      },
+      {
+        id: 'garen',
+        name: 'Garen',
+        cost: 1,
+        traits: ['Battle Academia', 'Bastion'],
+        stats: {
+          damage: 55,
+          health: 750,
+          armor: 40,
+          magicResist: 40,
+          attackSpeed: 0.65,
+          range: 1,
+        },
+        ability: {
+          name: 'Decisive Strike',
+          description: 'Gain Movement Speed and next attack deals bonus damage and silences.',
           manaCost: 60,
+          damage: [200, 300, 450],
+        },
+        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-champion/TFT15_Garen.TFT_Set15.png',
+        tier: 1,
+      },
+      {
+        id: 'lux',
+        name: 'Lux',
+        cost: 3,
+        traits: ['Star Guardian', 'Sorcerer'],
+        stats: {
+          damage: 50,
+          health: 600,
+          armor: 25,
+          magicResist: 25,
+          attackSpeed: 0.65,
+          range: 4,
+        },
+        ability: {
+          name: 'Final Spark',
+          description: 'Fire a laser beam that deals magic damage to all enemies in a line.',
+          manaCost: 80,
           damage: [250, 375, 565],
         },
-        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-champion/TFT12_Jinx.TFT_Set12.png',
-        tier: 1,
+        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-champion/TFT15_Lux.TFT_Set15.png',
+        tier: 3,
       },
     ];
   }
@@ -238,37 +260,60 @@ class TFTApiService {
   private getMockTraits(): TFTTrait[] {
     return [
       {
-        id: 'Invoker',
-        name: 'Invoker',
-        description: 'Invokers gain Ability Power.',
+        id: 'TFT15_StarGuardian',
+        name: 'Star Guardian',
+        description: 'Star Guardians have a unique Teamwork bonus that is granted to all Star Guardians.',
         effects: [
           { minUnits: 2, style: 1 },
           { minUnits: 4, style: 2 },
           { minUnits: 6, style: 3 },
+          { minUnits: 8, style: 4 },
         ],
-        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-trait/Set12_Invoker.png',
+        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-trait/Set15_StarGuardian.png',
       },
       {
-        id: 'Sugarcraft',
-        name: 'Sugarcraft',
-        description: 'Sugarcraft units gain Health and deal bonus damage.',
+        id: 'TFT15_Sorcerer',
+        name: 'Sorcerer',
+        description: 'Sorcerers gain Ability Power and their spells can critically strike.',
         effects: [
           { minUnits: 2, style: 1 },
           { minUnits: 4, style: 2 },
           { minUnits: 6, style: 3 },
         ],
-        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-trait/Set12_Sugarcraft.png',
+        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-trait/Set15_Sorcerer.png',
       },
       {
-        id: 'Vanguard',
-        name: 'Vanguard',
-        description: 'Vanguards gain Armor and Magic Resist.',
+        id: 'TFT15_Bastion',
+        name: 'Bastion',
+        description: 'Bastions gain Armor and Magic Resist.',
         effects: [
           { minUnits: 2, style: 1 },
           { minUnits: 4, style: 2 },
           { minUnits: 6, style: 3 },
         ],
-        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-trait/Set12_Vanguard.png',
+        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-trait/Set15_Bastion.png',
+      },
+      {
+        id: 'TFT15_BattleAcademia',
+        name: 'Battle Academia',
+        description: 'Battle Academia units gain bonus stats after casting their spell.',
+        effects: [
+          { minUnits: 3, style: 1 },
+          { minUnits: 5, style: 2 },
+          { minUnits: 7, style: 3 },
+        ],
+        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-trait/Set15_BattleAcademia.png',
+      },
+      {
+        id: 'TFT15_Sniper',
+        name: 'Sniper',
+        description: 'Snipers gain Attack Damage and their attacks can bounce.',
+        effects: [
+          { minUnits: 2, style: 1 },
+          { minUnits: 4, style: 2 },
+          { minUnits: 6, style: 3 },
+        ],
+        image: 'https://ddragon.leagueoflegends.com/cdn/15.18.1/img/tft-trait/Set15_Sniper.png',
       },
     ];
   }

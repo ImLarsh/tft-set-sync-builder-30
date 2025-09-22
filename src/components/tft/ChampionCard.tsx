@@ -143,20 +143,24 @@ export default function ChampionCard({
                       allTraits
                         .filter(trait => 
                           champion.traits.some(championTrait => 
-                            championTrait.toLowerCase().includes(trait.name.toLowerCase()) ||
-                            trait.name.toLowerCase().includes(championTrait.toLowerCase()) ||
+                            // Exact match first
                             championTrait === trait.name ||
-                            championTrait === trait.id
+                            // Clean match without Set15_ prefix
+                            championTrait === trait.id.replace(/^TFT15_/, '').replace(/^Set15_/, '') ||
+                            // Fallback to case-insensitive exact match
+                            championTrait.toLowerCase() === trait.name.toLowerCase()
                           )
                         )
                         .slice(0, 3)
                         .map((trait) => {
                           const currentCount = allPlacedChampions.filter(pc => 
                             pc.champion.traits.some(championTrait => 
-                              championTrait.toLowerCase().includes(trait.name.toLowerCase()) ||
-                              trait.name.toLowerCase().includes(championTrait.toLowerCase()) ||
+                              // Exact match first
                               championTrait === trait.name ||
-                              championTrait === trait.id
+                              // Clean match without Set15_ prefix
+                              championTrait === trait.id.replace(/^TFT15_/, '').replace(/^Set15_/, '') ||
+                              // Fallback to case-insensitive exact match
+                              championTrait.toLowerCase() === trait.name.toLowerCase()
                             )
                           ).length;
 

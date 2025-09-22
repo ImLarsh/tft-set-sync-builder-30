@@ -14,12 +14,15 @@ export default function TraitTracker({ traits, placedChampions }: TraitTrackerPr
   // Calculate trait activations
   const traitActivations: TraitActivation[] = traits.map(trait => {
     const currentCount = placedChampions.filter(pc => 
-      pc.champion.traits.some(championTrait => 
-        championTrait.toLowerCase().includes(trait.name.toLowerCase()) ||
-        trait.name.toLowerCase().includes(championTrait.toLowerCase()) ||
-        championTrait === trait.name ||
-        championTrait === trait.id
-      )
+      pc.champion.traits.some(championTrait => {
+        // Exact match first
+        if (championTrait === trait.name) return true;
+        // Clean match without Set15_ prefix
+        if (championTrait === trait.id.replace(/^TFT15_/, '').replace(/^Set15_/, '')) return true;
+        // Fallback to case-insensitive exact match
+        if (championTrait.toLowerCase() === trait.name.toLowerCase()) return true;
+        return false;
+      })
     ).length;
 
     let activeLevel = 0;

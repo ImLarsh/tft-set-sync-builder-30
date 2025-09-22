@@ -19,23 +19,29 @@ export default function ChampionTraitDisplay({
 }: ChampionTraitDisplayProps) {
   // Get matching traits for this champion
   const championTraits = allTraits.filter(trait => 
-    champion.traits.some(championTrait => 
-      championTrait.toLowerCase().includes(trait.name.toLowerCase()) ||
-      trait.name.toLowerCase().includes(championTrait.toLowerCase()) ||
-      championTrait === trait.name ||
-      championTrait === trait.id
-    )
+    champion.traits.some(championTrait => {
+      // Exact match first
+      if (championTrait === trait.name) return true;
+      // Clean match without Set15_ prefix
+      if (championTrait === trait.id.replace(/^TFT15_/, '').replace(/^Set15_/, '')) return true;
+      // Fallback to case-insensitive exact match
+      if (championTrait.toLowerCase() === trait.name.toLowerCase()) return true;
+      return false;
+    })
   );
 
   // Calculate current counts for each trait
   const traitsWithCounts = championTraits.map(trait => {
     const currentCount = allPlacedChampions.filter(pc => 
-      pc.champion.traits.some(championTrait => 
-        championTrait.toLowerCase().includes(trait.name.toLowerCase()) ||
-        trait.name.toLowerCase().includes(championTrait.toLowerCase()) ||
-        championTrait === trait.name ||
-        championTrait === trait.id
-      )
+      pc.champion.traits.some(championTrait => {
+        // Exact match first
+        if (championTrait === trait.name) return true;
+        // Clean match without Set15_ prefix
+        if (championTrait === trait.id.replace(/^TFT15_/, '').replace(/^Set15_/, '')) return true;
+        // Fallback to case-insensitive exact match
+        if (championTrait.toLowerCase() === trait.name.toLowerCase()) return true;
+        return false;
+      })
     ).length;
 
     // Find active level
